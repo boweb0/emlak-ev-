@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Emlak Evi — Beyazevler Satılık & Kiralık Gayrimenkul</title>
+<meta name="description" content="Beyazevler, Çukurova (Adana) satılık ve kiralık daire, villa, dükkan ve arsa ilanları.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1220;--bg2:#0f192d;--card:#111c33;--ink:#eef2f8;--muted:#98a6bf;--line:rgba(255,255,255,.09);
+--accent:#d4a24c;--on-accent:#1a1204;--r:14px;--fh:'Playfair Display',Georgia,serif;--fb:'Inter',system-ui,sans-serif;--fw:600;
+--nav-bg:rgba(11,18,32,.82);--hero-bg:radial-gradient(1200px 600px at 80% -10%,#1d3260 0%,#0b1220 62%);--hero-ink:#fff;
+--intro-bg:#050a18;--intro-ink:#f4d28a;--map-filter:grayscale(.4) invert(.9) hue-rotate(185deg) contrast(.9)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,.serif{font-family:var(--fh);font-weight:var(--fw,600);letter-spacing:-.01em}
+.wrap{width:min(1180px,92%);margin:0 auto}
+section{padding:96px 0}
+.eyebrow{display:inline-block;font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
+h2{font-size:clamp(2rem,4vw,3rem);line-height:1.15;margin-bottom:14px}
+.lead{color:var(--muted);max-width:620px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:var(--r);border:1px solid transparent;cursor:pointer;font-weight:600;transition:.25s;background:var(--accent);color:var(--on-accent)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px -10px var(--accent)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent);box-shadow:none}
+.btn.sm{padding:8px 16px;font-size:.88rem}
+.btn.danger{background:#c0392b;color:#fff}
+/* intro */
+#intro{position:fixed;inset:0;z-index:999;background:var(--intro-bg);transition:opacity 1s ease,visibility 1s}
+#intro.hide{opacity:0;visibility:hidden}
+#introCanvas{position:absolute;inset:0;width:100%;height:100%}
+#introText{position:absolute;left:0;right:0;top:22%;text-align:center;color:#fff;opacity:0;transform:translateY(20px);transition:all 1.2s ease;padding:0 20px}
+#introText.show{opacity:1;transform:none}
+#introText h1{font-size:clamp(2.2rem,7vw,4.6rem);color:var(--intro-ink)}
+#introText p{letter-spacing:.35em;text-transform:uppercase;font-size:.8rem;color:var(--intro-ink);opacity:.8;margin-top:10px}
+#skip{position:absolute;right:20px;bottom:20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 16px;border-radius:99px;cursor:pointer;font-size:.8rem;backdrop-filter:blur(6px)}
+/* nav */
+header{position:fixed;top:0;left:0;right:0;z-index:50;transition:.3s}
+header.scrolled{background:var(--nav-bg);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--fh);font-size:1.45rem;font-weight:700}
+.logo i{width:36px;height:36px;border-radius:10px;background:var(--accent);display:grid;place-items:center;color:var(--on-accent);font-style:normal;font-size:1.1rem}
+.menu{display:flex;gap:30px;align-items:center}
+.menu a{font-size:.92rem;opacity:.85;transition:.2s}
+.menu a:hover{opacity:1;color:var(--accent)}
+#burger{display:none;background:none;border:0;font-size:1.7rem;cursor:pointer}
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:130px 0 120px;background:var(--hero-bg);overflow:hidden;color:var(--hero-ink)}
+.hero .wrap{position:relative;z-index:2}
+.hero h1{font-size:clamp(2.6rem,6.4vw,5.2rem);line-height:1.06;max-width:820px}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero p.sub{font-size:1.15rem;max-width:560px;margin:22px 0 34px;opacity:.82}
+.hero-city{position:absolute;left:0;right:0;bottom:0;height:46%;z-index:1;opacity:.9}
+.hero-city svg{width:100%;height:100%}
+.search{background:var(--card);color:var(--ink);border-radius:calc(var(--r) + 6px);padding:14px;display:grid;grid-template-columns:auto 1fr 1fr 1fr auto;gap:10px;box-shadow:0 30px 60px -25px rgba(0,0,0,.45);max-width:960px;position:relative;z-index:3}
+.seg{display:flex;background:var(--bg2);border-radius:var(--r);padding:4px}
+.seg button{border:0;background:none;padding:9px 18px;border-radius:calc(var(--r) - 3px);cursor:pointer;font-weight:600;color:var(--muted)}
+.seg button.on{background:var(--accent);color:var(--on-accent)}
+.search select,.search input{border:1px solid var(--line);background:transparent;border-radius:var(--r);padding:11px 14px;min-width:0}
+.search select option{color:#111}
+.stats{display:flex;gap:46px;margin-top:46px;flex-wrap:wrap}
+.stats b{font-family:var(--fh);font-size:2.3rem;display:block;color:var(--accent);line-height:1}
+.stats span{font-size:.85rem;opacity:.75}
+/* listings */
+.bar{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:34px 0 30px}
+.bar .seg{background:var(--card);border:1px solid var(--line)}
+.bar select{border:1px solid var(--line);background:var(--card);padding:10px 14px;border-radius:var(--r)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:26px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:.35s;position:relative}
+.card:hover{transform:translateY(-7px);box-shadow:0 28px 50px -28px rgba(0,0,0,.5)}
+.card .ph{aspect-ratio:4/3;overflow:hidden;position:relative;background:var(--bg2)}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:.6s}
+.card:hover .ph img{transform:scale(1.07)}
+.tag{position:absolute;top:14px;left:14px;padding:5px 13px;border-radius:99px;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.tag.satilik{background:var(--accent);color:var(--on-accent)}
+.tag.kiralik{background:#fff;color:#111}
+.tag.feat{left:auto;right:56px;background:rgba(0,0,0,.6);color:#fff}
+.fav{position:absolute;top:10px;right:12px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.92);cursor:pointer;font-size:1.05rem;display:grid;place-items:center;color:#999}
+.fav.on{color:#e0245e}
+.card .bd{padding:18px 20px 20px}
+.card h3{font-size:1.12rem;margin-bottom:4px;line-height:1.3}
+.card .loc{font-size:.84rem;color:var(--muted)}
+.card .meta{display:flex;gap:16px;margin:14px 0;font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:13px}
+.price{font-family:var(--fh);font-size:1.45rem;color:var(--accent);font-weight:700}
+.price small{font-size:.8rem;color:var(--muted);font-family:var(--fb);font-weight:400}
+.empty{grid-column:1/-1;text-align:center;padding:60px;color:var(--muted)}
+/* services */
+.svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;margin-top:44px}
+.svc div{padding:30px;border:1px solid var(--line);border-radius:var(--r);background:var(--card);transition:.3s}
+.svc div:hover{border-color:var(--accent);transform:translateY(-4px)}
+.svc .ic{font-size:2rem;margin-bottom:14px}
+.svc h3{margin-bottom:8px;font-size:1.2rem}
+.svc p{color:var(--muted);font-size:.93rem}
+.alt{background:var(--bg2)}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about .art{aspect-ratio:1;border-radius:var(--r);overflow:hidden;position:relative;background:var(--hero-bg);display:grid;place-items:center}
+.about ul{list-style:none;margin-top:22px;display:grid;gap:10px}
+.about li::before{content:"✓";color:var(--accent);font-weight:700;margin-right:10px}
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;margin-top:40px}
+.team .m{text-align:center;padding:30px 20px;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+.team .av{width:92px;height:92px;border-radius:50%;margin:0 auto 14px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-family:var(--fh);font-size:2rem}
+.team small{color:var(--muted)}
+.map{display:grid;grid-template-columns:1fr 1.5fr;gap:40px;align-items:stretch}
+.map iframe{width:100%;height:100%;min-height:380px;border:0;border-radius:var(--r);filter:var(--map-filter)}
+.info p{margin:12px 0;display:flex;gap:12px}
+form.f{display:grid;gap:14px}
+form.f input,form.f select,form.f textarea,.fld input,.fld select,.fld textarea{width:100%;padding:13px 15px;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+form.f textarea{min-height:110px;resize:vertical}
+footer{padding:36px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+footer a{cursor:pointer}footer a:hover{color:var(--accent)}
+.wa{position:fixed;right:22px;bottom:22px;z-index:60;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px -8px #25d366;font-size:1.7rem;color:#fff;animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.55)}70%{box-shadow:0 0 0 18px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+.rv{opacity:0;transform:translateY(34px);transition:.9s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal.open{display:flex}
+.mbox{background:var(--card);border-radius:var(--r);width:min(940px,100%);max-height:92vh;overflow:auto;display:grid;grid-template-columns:1.1fr 1fr;position:relative}
+.mbox .mi{background:var(--bg2);min-height:340px}.mbox .mi img{width:100%;height:100%;object-fit:cover}
+.mbox .mc{padding:34px}
+.mclose{position:absolute;top:12px;right:14px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:1.2rem;cursor:pointer;z-index:2}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0;font-size:.9rem}
+.specs div{background:var(--bg2);padding:10px 14px;border-radius:calc(var(--r) - 4px)}
+.specs small{display:block;color:var(--muted);font-size:.75rem}
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(80px);background:#111;color:#fff;padding:12px 22px;border-radius:99px;z-index:500;transition:.4s;opacity:0}
+.toast.show{transform:translateX(-50%);opacity:1}
+/* admin */
+#admin{position:fixed;inset:0;z-index:300;background:#f1f3f6;color:#1b2430;display:none;overflow:auto;font-family:'Inter',system-ui,sans-serif}
+#admin.open{display:block}
+#admin .btn.ghost{color:#1b2430;border-color:#cbd5e1;background:#fff}#admin .btn.ghost:hover{border-color:var(--accent);color:#1b2430}
+#admin h2,#admin h3{font-family:'Inter',system-ui,sans-serif;font-weight:700;font-size:1.3rem;margin:0 0 14px;letter-spacing:0}
+.login{min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,var(--hero-bg),#000)}
+.login form{background:#fff;padding:38px;border-radius:16px;width:min(390px,100%);display:grid;gap:14px;text-align:center}
+.login input{padding:13px;border:1px solid #d5dbe3;border-radius:10px;text-align:center}
+.login small{color:#6b7684}
+.adm{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+.side{background:#111827;color:#cbd5e1;padding:22px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:6px}
+.side .brand{color:#fff;font-weight:700;font-size:1.1rem;padding:6px 12px 18px}
+.side button{background:none;border:0;color:inherit;text-align:left;padding:11px 14px;border-radius:9px;cursor:pointer;font-size:.93rem}
+.side button:hover{background:#1f2937}.side button.on{background:var(--accent);color:var(--on-accent)}
+.side .sp{flex:1}
+.main{padding:30px 34px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:26px}
+.kpi{background:#fff;border-radius:14px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.kpi b{font-size:1.9rem;display:block}.kpi span{color:#6b7684;font-size:.85rem}
+.panel{background:#fff;border-radius:14px;padding:22px;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:22px}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{text-align:left;padding:11px 10px;border-bottom:1px solid #eef0f4;vertical-align:middle}
+th{color:#6b7684;font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+td img{width:60px;height:44px;object-fit:cover;border-radius:6px}
+.pill{padding:3px 10px;border-radius:99px;font-size:.74rem;font-weight:700}
+.pill.s{background:#dcfce7;color:#166534}.pill.k{background:#dbeafe;color:#1e40af}.pill.n{background:#fef3c7;color:#92400e}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.fld label{display:block;font-size:.8rem;font-weight:600;margin-bottom:5px;color:#4b5563}
+#admin .fld input,#admin .fld select,#admin .fld textarea{background:#fff;color:#111;border:1px solid #d5dbe3}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sp-between{justify-content:space-between}
+.mbtn{display:none}
+@media(max-width:900px){
+ .menu{position:fixed;top:74px;left:0;right:0;background:var(--bg);flex-direction:column;padding:24px;gap:18px;display:none;border-bottom:1px solid var(--line)}
+ .menu.open{display:flex}#burger{display:block}
+ .search{grid-template-columns:1fr 1fr}.search .seg{grid-column:1/-1}
+ .about,.map,.mbox{grid-template-columns:1fr}
+ .adm{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;flex-wrap:wrap}.side .brand{width:100%}
+ .main{padding:20px 14px}section{padding:70px 0}
+ table{display:block;overflow-x:auto}
+}
+</style>
+</head>
+<body class="dark">
+
+<div id="intro">
+  <canvas id="introCanvas"></canvas>
+  <div id="introText"><h1 data-b="name">Emlak Evi</h1><p>Gayrimenkul · Beyazevler · Çukurova</p></div>
+  <button id="skip">Siteye geç →</button>
+</div>
+
+<header id="hd"><div class="wrap nav">
+  <a href="#top" class="logo"><i>⌂</i><span data-b="name">Emlak Evi</span></a>
+  <nav class="menu" id="menu">
+    <a href="#ilanlar">İlanlar</a><a href="#hizmetler">Hizmetler</a><a href="#hakkimizda">Hakkımızda</a><a href="#konum">Konum</a>
+    <a href="#iletisim" class="btn sm">Bize Ulaşın</a>
+  </nav>
+  <button id="burger" aria-label="menü">☰</button>
+</div></header>
+
+<main id="top">
+<div class="hero">
+  <div class="hero-city" id="heroCity"></div>
+  <div class="wrap">
+    <span class="eyebrow">Beyazevler · Çukurova · Adana</span>
+    <h1>Şehrin kalbinde, <em>eviniz</em> sizi bekliyor.</h1>
+    <p class="sub" data-b="slogan">Beyazevler’de hayalinizdeki eve, güvenle ve hızla ulaşın.</p>
+    <div class="search">
+      <div class="seg" id="hsType"><button class="on" data-v="satilik">Satılık</button><button data-v="kiralik">Kiralık</button></div>
+      <select id="hsCat"><option value="">Tüm Türler</option><option>Daire</option><option>Villa</option><option>Dükkan</option><option>Arsa</option></select>
+      <select id="hsRoom"><option value="">Oda Sayısı</option><option>1+1</option><option>2+1</option><option>3+1</option><option>4+1</option></select>
+      <input id="hsQ" placeholder="Mahalle / kelime ara">
+      <button class="btn" id="hsGo">Ara</button>
+    </div>
+    <div class="stats">
+      <div><b data-count="850">0</b><span>Mutlu aile</span></div>
+      <div><b data-count="12">0</b><span>Yıllık tecrübe</span></div>
+      <div><b data-count="320">0</b><span>Satılan & kiralanan mülk</span></div>
+    </div>
+  </div>
+</div>
+
+<section id="ilanlar"><div class="wrap">
+  <span class="eyebrow rv">Portföy</span>
+  <h2 class="rv">Güncel İlanlarımız</h2>
+  <p class="lead rv">Bölgenin satılık ve kiralık seçkin gayrimenkulleri. İlanlar yönetim panelinden anında güncellenir.</p>
+  <div class="bar">
+    <div class="seg" id="fType"><button class="on" data-v="">Tümü</button><button data-v="satilik">Satılık</button><button data-v="kiralik">Kiralık</button></div>
+    <select id="fCat"><option value="">Tüm Türler</option><option>Daire</option><option>Villa</option><option>Dükkan</option><option>Arsa</option></select>
+    <select id="fRoom"><option value="">Tüm Odalar</option><option>1+1</option><option>2+1</option><option>3+1</option><option>4+1</option></select>
+    <select id="fSort"><option value="new">En yeni</option><option value="pa">Fiyat ↑</option><option value="pd">Fiyat ↓</option></select>
+    <button class="btn ghost sm" id="fFav">♥ Favorilerim</button>
+    <span id="fCount" style="color:var(--muted);font-size:.9rem;margin-left:auto"></span>
+  </div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<section id="hizmetler" class="alt"><div class="wrap">
+  <span class="eyebrow rv">Hizmetlerimiz</span>
+  <h2 class="rv">Gayrimenkulde Tek Adres</h2>
+  <div class="svc">
+    <div class="rv"><div class="ic">🏠</div><h3>Satılık Danışmanlık</h3><p>Doğru fiyat analizi, profesyonel fotoğraf ve hızlı alıcı eşleştirme ile mülkünüzü değerinde satıyoruz.</p></div>
+    <div class="rv"><div class="ic">🔑</div><h3>Kiralama Yönetimi</h3><p>Güvenilir kiracı bulma, sözleşme ve tahsilat takibi. Mülkünüz emin ellerde.</p></div>
+    <div class="rv"><div class="ic">📈</div><h3>Değerleme & Ekspertiz</h3><p>Bölgedeki güncel satış verilerine göre ücretsiz değer tespiti.</p></div>
+    <div class="rv"><div class="ic">📄</div><h3>Tapu & Hukuki Süreç</h3><p>Tapu devri, iskân, kredi ve tüm resmi işlemlerde baştan sona yanınızdayız.</p></div>
+  </div>
+</div></section>
+
+<section id="hakkimizda"><div class="wrap">
+  <div class="about">
+    <div class="art rv" id="aboutArt"></div>
+    <div class="rv">
+      <span class="eyebrow">Hakkımızda</span>
+      <h2>Mahallenizin Güvenilir Emlakçısı</h2>
+      <p class="lead">Yıllardır Beyazevler ve çevresinde yaşayan ailelerin güvenle başvurduğu adresiyiz. Mahalleyi, sokakları ve piyasayı bilen ekibimizle alım, satım ve kiralamada şeffaf, hızlı ve sonuç odaklı hizmet veriyoruz.</p>
+      <ul><li>Yetki belgeli, şeffaf ve dürüst hizmet</li><li>Mahalleyi ve piyasayı yakından bilen ekip</li><li>Satış ve kiralamada hızlı sonuç</li><li>Satış sonrası da yanınızdayız</li></ul>
+    </div>
+  </div>
+  <div class="team" id="team"></div>
+</div></section>
+
+<section id="konum" class="alt"><div class="wrap">
+  <span class="eyebrow rv">Konum</span>
+  <h2 class="rv">Ofisimiz</h2>
+  <div class="map rv" style="margin-top:34px">
+    <div class="info">
+      <p>📍 <span data-b="address"></span></p>
+      <p>📞 <a data-b="phone" data-href="tel"></a></p>
+      <p>🕘 <span data-b="hours"></span></p>
+      <p>✉️ <span data-b="email"></span></p>
+      <div class="row" style="margin-top:22px"><a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/JNMRvqovBtHrMqQg8">Yol Tarifi Al</a><a class="btn ghost" id="waBtn" target="_blank" rel="noopener">WhatsApp</a></div>
+    </div>
+    <iframe loading="lazy" src="https://maps.google.com/maps?q=37.0325076,35.3171597&z=16&output=embed&hl=tr" title="Harita"></iframe>
+  </div>
+</div></section>
+
+<section id="iletisim"><div class="wrap" style="max-width:720px;text-align:center">
+  <span class="eyebrow rv">İletişim</span>
+  <h2 class="rv">Mülkünüzü Değerlendirelim</h2>
+  <p class="lead rv" style="margin:0 auto 30px">Satmak, kiralamak ya da ev aramak için formu doldurun; sizi hemen arayalım.</p>
+  <form class="f rv" id="cForm" style="text-align:left">
+    <select name="konu"><option>Evimi satmak istiyorum</option><option>Evimi kiralamak istiyorum</option><option>Satılık ev arıyorum</option><option>Kiralık ev arıyorum</option><option>Diğer</option></select>
+    <input name="ad" placeholder="Adınız Soyadınız" required>
+    <input name="tel" placeholder="Telefon" required inputmode="tel">
+    <textarea name="mesaj" placeholder="Mesajınız (isteğe bağlı)"></textarea>
+    <button class="btn" type="submit" style="justify-content:center">Gönder</button>
+  </form>
+</div></section>
+</main>
+
+<footer><div class="wrap"><span>© <span id="yr"></span> <span data-b="name"></span> · Tüm hakları saklıdır.</span><span>Demo sürüm · <a id="openAdmin">Yönetim Paneli</a></span></div></footer>
+<a class="wa" id="waFab" target="_blank" rel="noopener" aria-label="WhatsApp">✆</a>
+
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+<div class="toast" id="toast"></div>
+
+<div id="admin"></div>
+
+<script>
+const CFG={"key": "emlakevi", "dark": true, "hue": 215, "intro": "night", "adminPass": "1234", "introFar": "#101d38", "introMid": "#0c1630", "introNear": "#080f22", "cityFar": "#142347", "cityWin": "#f4c76b", "office": {"name": "Emlak Evi", "slogan": "Beyazevler’de hayalinizdeki eve, güvenle ve hızla ulaşın.", "phone": "0 (322) 000 00 00", "whatsapp": "905320000000", "address": "Beyazevler Cd., Beyazevler Mah., 01170 Çukurova / Adana", "hours": "Her gün 09:00 – 19:30", "email": "info@emlakevi.com"}, "team": [["Danışman 1", "Gayrimenkul Danışmanı"], ["Danışman 2", "Kiralama Uzmanı"], ["Danışman 3", "Değerleme Uzmanı"]]};
+const LS='demo_'+CFG.key+'_';
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const load=(k,d)=>{try{const v=localStorage.getItem(LS+k);return v?JSON.parse(v):d}catch(e){return d}};
+const save=(k,v)=>{try{localStorage.setItem(LS+k,JSON.stringify(v));return true}catch(e){toast('Kayıt alanı doldu — görsel çok büyük olabilir');return false}};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2600)}
+const fmt=n=>Number(n||0).toLocaleString('tr-TR');
+const hsl=(h,s,l)=>`hsl(${h},${s}%,${l}%)`;
+
+/* ---------- görsel üretici (fotoğraf yokken) ---------- */
+function art(h,cat,seed){
+  seed=seed||1;let r=n=>{seed=(seed*9301+49297)%233280;return seed/233280*n};
+  const dark=CFG.dark;
+  let s=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${hsl(h,60,dark?22:78)}'/><stop offset='1' stop-color='${hsl(h+20,70,dark?42:92)}'/></linearGradient></defs><rect width='800' height='600' fill='url(#g)'/><circle cx='${600+r(120)}' cy='${110+r(30)}' r='46' fill='${dark?"#f4e7b8":"#fff6cf"}' opacity='.9'/>`;
+  for(let i=0;i<5;i++)s+=`<rect x='${r(760)}' y='${300+r(100)}' width='${30+r(50)}' height='${200}' fill='${hsl(h,30,dark?30:82)}' opacity='.55'/>`;
+  const wall=hsl(h,35,dark?60:96),shade=hsl(h,30,dark?48:84),win=dark?'#ffd98a':hsl(h+160,50,70);
+  if(cat==='Villa'){
+    s+=`<rect x='0' y='470' width='800' height='130' fill='${hsl(h+90,35,dark?25:62)}'/><rect x='170' y='270' width='460' height='215' fill='${wall}'/><polygon points='140,275 400,140 660,275' fill='${hsl(h+10,45,dark?35:50)}'/><rect x='185' y='300' width='100' height='90' fill='${win}'/><rect x='515' y='300' width='100' height='90' fill='${win}'/><rect x='350' y='370' width='100' height='115' fill='${hsl(h,40,30)}'/><rect x='320' y='300' width='160' height='55' fill='${win}' opacity='.8'/>`;
+  }else if(cat==='Dükkan'){
+    s+=`<rect x='0' y='480' width='800' height='120' fill='${hsl(h,10,dark?22:70)}'/><rect x='110' y='250' width='580' height='240' fill='${wall}'/><rect x='110' y='250' width='580' height='54' fill='${hsl(h+10,50,dark?40:48)}'/><rect x='150' y='330' width='320' height='150' fill='${win}' opacity='.85'/><rect x='500' y='330' width='110' height='150' fill='${hsl(h,35,30)}'/>`;
+    for(let i=0;i<9;i++)s+=`<rect x='${110+i*65}' y='304' width='33' height='22' fill='${i%2?"#fff":hsl(h+10,50,60)}' />`;
+  }else if(cat==='Arsa'){
+    s+=`<rect x='0' y='380' width='800' height='220' fill='${hsl(h+80,40,dark?28:68)}'/><polygon points='0,430 800,400 800,600 0,600' fill='${hsl(h+80,40,dark?22:58)}'/>`;
+    for(let i=0;i<16;i++)s+=`<rect x='${40+i*48}' y='${420+Math.sin(i)*8}' width='6' height='70' fill='${hsl(30,40,dark?40:40)}'/>`;
+    s+=`<line x1='30' y1='450' x2='780' y2='450' stroke='${hsl(30,30,40)}' stroke-width='4'/><line x1='30' y1='475' x2='780' y2='475' stroke='${hsl(30,30,40)}' stroke-width='4'/>`;
+  }else{
+    const fl=6+Math.floor(r(4));
+    s+=`<rect x='0' y='500' width='800' height='100' fill='${hsl(h,8,dark?20:72)}'/><rect x='220' y='${500-fl*52}' width='360' height='${fl*52}' fill='${wall}'/><rect x='200' y='${490-fl*52}' width='400' height='14' fill='${shade}'/>`;
+    for(let y=0;y<fl;y++)for(let x=0;x<4;x++)s+=`<rect x='${245+x*82}' y='${(500-fl*52)+14+y*52}' width='52' height='32' fill='${r(1)>.35?win:shade}'/>`;
+    s+=`<rect x='370' y='455' width='60' height='45' fill='${hsl(h,40,28)}'/>`;
+  }
+  s+='</svg>';return 'data:image/svg+xml;utf8,'+encodeURIComponent(s);
+}
+const imgOf=l=>l.img||art(l.hue||200,l.cat,l.id.length*7+l.m2);
+
+/* ---------- veri ---------- */
+function seed(){
+  const d=n=>new Date(Date.now()-n*864e5).toISOString();
+  const raw=[
+   ['Beyazevler’de Masrafsız Geniş Oturumlu 2+1','satilik','Daire',3550000,'2+1',100,'3. Kat','Beyazevler Mah.','Kapalı mutfak, doğalgazlı, ulaşıma ve sosyal alanlara yakın, masrafsız daire.',true,210],
+   ['Merkezi Konumda Eşyalı 1+1 Yatırımlık Daire','satilik','Daire',2150000,'1+1',55,'2. Kat','Beyazevler Mah.','Yatırımcılar için kiralama garantili, eşyalı ve bakımlı daire.',false,260],
+   ['Yeni Binada Açık Mutfak 3+1 Lüks Daire','satilik','Daire',5750000,'3+1',165,'4. Kat','Yüzüncüyıl Mah.','Güvenlikli site içinde, kapalı otoparklı, ebeveyn banyolu ferah daire.',true,30],
+   ['Bahçeli Müstakil Villa 5+1','satilik','Villa',14900000,'5+1',310,'Müstakil','Çukurova','Geniş bahçe, havuz imkânı, özel mimari tasarımlı villa.',true,150],
+   ['Cadde Üzeri Kiralık Dükkan','kiralik','Dükkan',45000,'-',90,'Zemin','Beyazevler Cd.','Yoğun yaya trafiği olan cadde üzerinde, depolu ve tuvaletli dükkan.',false,10],
+   ['Doğalgazlı Eşyalı 2+1 Kiralık Daire','kiralik','Daire',18000,'2+1',110,'3. Kat','Beyazevler Mah.','Yeni bina, kombili, asansörlü, aile için uygun kiralık daire.',false,190],
+   ['Site İçinde Havuzlu 3+1 Kiralık','kiralik','Daire',32000,'3+1',150,'5. Kat','Güzelyalı Mah.','Sosyal tesisli, 7/24 güvenlikli site içinde ferah daire.',true,330],
+   ['İmarlı Köşe Başı Arsa','satilik','Arsa',6200000,'-',480,'-','Yurt Mah.','Köşe parsel, imarlı, tapusu hazır, yatırımlık fırsat arsa.',false,100],
+   ['Öğrenciye Uygun Kiralık 1+1','kiralik','Daire',11500,'1+1',50,'1. Kat','Yüzüncüyıl Mah.','Üniversiteye ve toplu ulaşıma yakın, bakımlı daire.',false,40]
+  ];
+  return raw.map((a,i)=>({id:'i'+(i+1),title:a[0],type:a[1],cat:a[2],price:a[3],rooms:a[4],m2:a[5],floor:a[6],district:a[7],desc:a[8],feat:a[9],hue:a[10],img:'',date:d(i*2)}));
+}
+let S=Object.assign({},CFG.office,load('settings',{}));
+let L=load('listings',null);if(!L){L=seed();save('listings',L)}
+let REQ=load('requests',[]);let FAV=load('fav',[]);
+
+/* ---------- ayarları yansıt ---------- */
+function bind(){
+  $$('[data-b]').forEach(e=>{const v=S[e.dataset.b];if(v!=null){e.textContent=v;if(e.dataset.href==='tel')e.href='tel:'+String(v).replace(/\s/g,'')}});
+  const wa='https://wa.me/'+String(S.whatsapp).replace(/\D/g,'')+'?text='+encodeURIComponent('Merhaba, web sitenizden ulaşıyorum.');
+  $('#waFab').href=wa;$('#waBtn').href=wa;
+  document.title=S.name+' — Gayrimenkul';
+  $('#yr').textContent=new Date().getFullYear();
+  $('#team').innerHTML=(CFG.team||[]).map(m=>`<div class="m rv"><div class="av">${esc(m[0][0])}</div><b>${esc(m[0])}</b><br><small>${esc(m[1])}</small></div>`).join('');
+}
+
+/* ---------- ilan listesi ---------- */
+const F={type:'',cat:'',room:'',sort:'new',q:'',fav:false};
+function price(l){return l.type==='kiralik'?`${fmt(l.price)} ₺<small> /ay</small>`:`${fmt(l.price)} ₺`}
+function renderGrid(){
+  let a=L.filter(l=>(!F.type||l.type===F.type)&&(!F.cat||l.cat===F.cat)&&(!F.room||l.rooms===F.room)&&(!F.fav||FAV.includes(l.id))&&(!F.q||(l.title+l.district+l.desc).toLowerCase().includes(F.q.toLowerCase())));
+  if(F.sort==='pa')a.sort((x,y)=>x.price-y.price);else if(F.sort==='pd')a.sort((x,y)=>y.price-x.price);else a.sort((x,y)=>new Date(y.date)-new Date(x.date));
+  $('#fCount').textContent=a.length+' ilan';
+  $('#grid').innerHTML=a.length?a.map(l=>`<article class="card rv in" data-id="${esc(l.id)}">
+   <div class="ph"><img loading="lazy" src="${imgOf(l)}" alt=""><span class="tag ${l.type}">${l.type==='satilik'?'Satılık':'Kiralık'}</span>${l.feat?'<span class="tag feat">★ Fırsat</span>':''}<button class="fav ${FAV.includes(l.id)?'on':''}" data-fav="${esc(l.id)}" aria-label="favori">♥</button></div>
+   <div class="bd"><h3>${esc(l.title)}</h3><div class="loc">📍 ${esc(l.district)}</div>
+   <div class="meta"><span>🛏 ${esc(l.rooms)}</span><span>📐 ${esc(l.m2)} m²</span><span>🏢 ${esc(l.floor)}</span></div>
+   <div class="price">${price(l)}</div></div></article>`).join(''):'<div class="empty">Bu kriterlere uygun ilan bulunamadı.</div>';
+}
+function segBind(sel,key,cb){$(sel).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('button',$(sel)).forEach(x=>x.classList.toggle('on',x===b));F[key]=b.dataset.v;cb&&cb()})}
+segBind('#fType','type',renderGrid);
+$('#fCat').onchange=e=>{F.cat=e.target.value;renderGrid()};
+$('#fRoom').onchange=e=>{F.room=e.target.value;renderGrid()};
+$('#fSort').onchange=e=>{F.sort=e.target.value;renderGrid()};
+$('#fFav').onclick=e=>{F.fav=!F.fav;e.target.classList.toggle('ghost',!F.fav);renderGrid()};
+let hsT='satilik';
+$('#hsType').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('button',$('#hsType')).forEach(x=>x.classList.toggle('on',x===b));hsT=b.dataset.v});
+$('#hsGo').onclick=()=>{
+  F.type=hsT;F.cat=$('#hsCat').value;F.room=$('#hsRoom').value;F.q=$('#hsQ').value.trim();F.fav=false;
+  $$('#fType button').forEach(x=>x.classList.toggle('on',x.dataset.v===F.type));$('#fCat').value=F.cat;$('#fRoom').value=F.room;
+  renderGrid();$('#ilanlar').scrollIntoView({behavior:'smooth'});
+};
+$('#grid').addEventListener('click',e=>{
+  const f=e.target.closest('[data-fav]');
+  if(f){e.stopPropagation();const id=f.dataset.fav;FAV=FAV.includes(id)?FAV.filter(x=>x!==id):[...FAV,id];save('fav',FAV);f.classList.toggle('on');return}
+  const c=e.target.closest('.card');if(c)openModal(c.dataset.id);
+});
+
+/* ---------- ilan detay ---------- */
+function openModal(id){
+  const l=L.find(x=>x.id===id);if(!l)return;
+  const wa='https://wa.me/'+String(S.whatsapp).replace(/\D/g,'')+'?text='+encodeURIComponent(`Merhaba, "${l.title}" ilanı hakkında bilgi almak istiyorum.`);
+  $('#mbox').innerHTML=`<button class="mclose" onclick="closeModal()">✕</button><div class="mi"><img src="${imgOf(l)}" alt=""></div>
+  <div class="mc"><span class="pill ${l.type==='satilik'?'s':'k'}">${l.type==='satilik'?'SATILIK':'KİRALIK'}</span>
+  <h3 style="font-size:1.55rem;margin:12px 0 4px">${esc(l.title)}</h3><div style="color:var(--muted)">📍 ${esc(l.district)}</div>
+  <div class="price" style="font-size:2rem;margin:14px 0">${price(l)}</div>
+  <div class="specs"><div><small>Tür</small>${esc(l.cat)}</div><div><small>Oda</small>${esc(l.rooms)}</div><div><small>Alan</small>${esc(l.m2)} m²</div><div><small>Kat</small>${esc(l.floor)}</div></div>
+  <p style="color:var(--muted);font-size:.95rem">${esc(l.desc)}</p>
+  <div class="row" style="margin-top:22px"><a class="btn" target="_blank" rel="noopener" href="${wa}">WhatsApp’tan Sor</a><a class="btn ghost" href="tel:${esc(String(S.phone).replace(/\s/g,''))}">Ara</a></div>
+  <p style="font-size:.75rem;color:var(--muted);margin-top:14px">İlan no: ${esc(l.id.toUpperCase())}</p></div>`;
+  $('#modal').classList.add('open');
+}
+function closeModal(){$('#modal').classList.remove('open')}
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+/* ---------- iletişim formu ---------- */
+$('#cForm').addEventListener('submit',e=>{
+  e.preventDefault();const f=new FormData(e.target);
+  REQ.unshift({id:'r'+Date.now(),konu:f.get('konu'),ad:f.get('ad'),tel:f.get('tel'),mesaj:f.get('mesaj'),date:new Date().toISOString(),read:false});
+  save('requests',REQ);e.target.reset();toast('Talebiniz alındı, en kısa sürede dönüş yapacağız ✓');
+});
+
+/* ---------- nav / reveal / sayaç ---------- */
+const hd=$('#hd');addEventListener('scroll',()=>hd.classList.toggle('scrolled',scrollY>30));
+$('#burger').onclick=()=>$('#menu').classList.toggle('open');
+$$('#menu a').forEach(a=>a.addEventListener('click',()=>$('#menu').classList.remove('open')));
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}}),{threshold:.12});
+function observe(){$$('.rv:not(.in)').forEach(e=>io.observe(e))}
+function counters(){
+  $$('[data-count]').forEach(el=>{const to=+el.dataset.count,t0=performance.now();
+    (function step(t){const p=Math.min((t-t0)/1800,1);el.textContent=fmt(Math.round(to*(1-Math.pow(1-p,3))))+(p>=1&&el.dataset.plus!=null?'':'');if(p<1)requestAnimationFrame(step)})(t0)});
+}
+
+/* ---------- hero şehir silueti + hakkımızda görseli ---------- */
+function citySVG(){
+  let s='<svg viewBox="0 0 1440 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">';let x=0,i=0,seed=7;const r=n=>{seed=(seed*9301+49297)%233280;return seed/233280*n};
+  while(x<1440){const w=50+r(70),h=90+r(230);
+    s+=`<rect x="${x}" y="${400-h}" width="${w}" height="${h}" fill="${CFG.cityFar}"/>`;
+    for(let yy=400-h+14;yy<390;yy+=22)for(let xx=x+9;xx<x+w-12;xx+=17)if(r(1)>.55)s+=`<rect x="${xx}" y="${yy}" width="7" height="10" fill="${CFG.cityWin}" opacity="${.25+r(.6)}"/>`;
+    x+=w+3+r(8);i++}
+  return s+'</svg>';
+}
+$('#heroCity').innerHTML=citySVG();
+$('#aboutArt').innerHTML=`<img src="${art(CFG.hue,'Daire',5)}" style="width:100%;height:100%;object-fit:cover" alt="">`;
+
+/* ---------- AÇILIŞ ANİMASYONU: şehir yükseliyor ---------- */
+function intro(){
+  const el=$('#intro'),cv=$('#introCanvas'),ctx=cv.getContext('2d');
+  if((sessionStorage.getItem(LS+'seen')||/nointro/.test(location.search))&&!/introT=/.test(location.search)){el.remove();counters();return}
+  const night=CFG.intro==='night';let W,H,dpr=Math.min(devicePixelRatio||1,2);
+  function rs(){W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}rs();addEventListener('resize',rs);
+  let seed=11;const R=n=>{seed=(seed*9301+49297)%233280;return seed/233280*n};
+  const layers=[{n:0,col:CFG.introFar,hs:.30,sp:0},{n:1,col:CFG.introMid,hs:.42,sp:0},{n:2,col:CFG.introNear,hs:.52,sp:0}];
+  layers.forEach((L,li)=>{L.b=[];let x=-20;while(x<W+40){const w=(28+R(46))*(1+li*.35),h=H*L.hs*(.35+R(.75));L.b.push({x,w,h,d:R(1.6)+li*.35,win:[],c:Math.floor(w/14),rows:Math.floor(h/20)});x+=w+(li===2?3:1)}
+    L.b.forEach(b=>{for(let i=0;i<b.c*b.rows;i++)b.win.push({on:R(1)>.5,t:2.2+R(2.2)})})});
+  const stars=Array.from({length:70},()=>({x:R(1),y:R(.55),s:R(1.6)+.3,p:R(6)}));
+  const clouds=Array.from({length:5},()=>({x:R(1),y:.08+R(.25),s:.6+R(.9),v:.01+R(.02)}));
+  const cars=Array.from({length:7},()=>({x:R(1),v:(R(1)>.5?1:-1)*(.08+R(.12)),c:R(1)>.5?'#ffd27a':'#ff5d5d'}));
+  const t0=performance.now();let raf,done=false;const FIXT=(/[?&]introT=([\d.]+)/.exec(location.search)||[])[1]!=null?+(/[?&]introT=([\d.]+)/.exec(location.search)[1]):null;
+  const ease=p=>1-Math.pow(1-p,3);
+  function draw(now){
+    const t=FIXT!==null?FIXT:(now-t0)/1000;
+    const g=ctx.createLinearGradient(0,0,0,H);
+    if(night){g.addColorStop(0,'#050a18');g.addColorStop(.7,'#14233f');g.addColorStop(1,'#2a3a63')}else{g.addColorStop(0,'#7ec8f2');g.addColorStop(.75,'#d8f0fb');g.addColorStop(1,'#fff3d6')}
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    if(night){stars.forEach(s=>{ctx.globalAlpha=.4+.6*Math.abs(Math.sin(t*1.5+s.p));ctx.fillStyle='#fff';ctx.fillRect(s.x*W,s.y*H,s.s,s.s)});ctx.globalAlpha=1;
+      const my=H*.2-Math.min(t,3)*4;ctx.fillStyle='#f6ecc8';ctx.beginPath();ctx.arc(W*.8,my,28,0,7);ctx.fill();ctx.fillStyle='#14233f';ctx.beginPath();ctx.arc(W*.8+11,my-5,25,0,7);ctx.fill()}
+    else{const sy=H*.55-ease(Math.min(t/3.5,1))*H*.38;ctx.fillStyle='rgba(255,236,150,.35)';ctx.beginPath();ctx.arc(W*.78,sy,70,0,7);ctx.fill();ctx.fillStyle='#fff3a8';ctx.beginPath();ctx.arc(W*.78,sy,44,0,7);ctx.fill();
+      ctx.fillStyle='rgba(255,255,255,.9)';clouds.forEach(c=>{const cx=((c.x+t*c.v)%1.2-.1)*W,cy=c.y*H;ctx.beginPath();ctx.ellipse(cx,cy,60*c.s,16*c.s,0,0,7);ctx.ellipse(cx+30*c.s,cy-10*c.s,40*c.s,18*c.s,0,0,7);ctx.fill()})}
+    const gy=H*.88;
+    layers.forEach((L,li)=>{
+      L.b.forEach(b=>{const p=ease(Math.max(0,Math.min((t-b.d*.8)/1.5,1)));const h=b.h*p;
+        ctx.fillStyle=L.col;ctx.fillRect(b.x,gy-h,b.w,h);
+        if(night&&p>.98){ctx.fillStyle='rgba(255,255,255,.04)';ctx.fillRect(b.x,gy-h,3,h)}
+        if(p>.97&&li>0){for(let r=0;r<b.rows;r++)for(let c=0;c<b.c;c++){const w=b.win[r*b.c+c];const on=t>w.t&&w.on;
+          if(night){ctx.fillStyle=on?`rgba(255,${200+Math.floor(30*Math.sin(w.t))},120,${.85})`:'rgba(255,255,255,.04)'}else{ctx.fillStyle=on?'rgba(255,255,255,.85)':'rgba(255,255,255,.28)'}
+          ctx.fillRect(b.x+6+c*14,gy-h+10+r*20,7,10)}}
+      });
+      if(li===1){ // vinç
+        const cp=ease(Math.min(Math.max((t-.6)/1.8,0),1)),cx=W*.2,ch=H*.46*cp;ctx.strokeStyle=night?'#ffb347':'#e07a3f';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(cx,gy);ctx.lineTo(cx,gy-ch);ctx.moveTo(cx-60,gy-ch);ctx.lineTo(cx+110,gy-ch);ctx.moveTo(cx,gy-ch-30);ctx.lineTo(cx+110,gy-ch);ctx.moveTo(cx,gy-ch-30);ctx.lineTo(cx-60,gy-ch);ctx.stroke();
+        if(cp>.95){const sw=Math.sin(t*1.4)*20;ctx.beginPath();ctx.moveTo(cx+80+sw,gy-ch);ctx.lineTo(cx+80+sw,gy-ch+60);ctx.stroke();ctx.fillStyle=night?'#ffb347':'#e07a3f';ctx.fillRect(cx+68+sw,gy-ch+60,24,12);if(night&&Math.sin(t*4)>0){ctx.fillStyle='#ff4040';ctx.beginPath();ctx.arc(cx,gy-ch-32,4,0,7);ctx.fill()}}}
+    });
+    ctx.fillStyle=night?'#0a1226':'#59616b';ctx.fillRect(0,gy,W,H-gy);
+    ctx.fillStyle=night?'#223255':'#e9edf2';for(let x=0;x<W;x+=60)ctx.fillRect(x+((t*30)%60)*0,gy+(H-gy)*.5,30,3);
+    if(t>2.5){cars.forEach(c=>{const x=(((c.x+t*c.v)%1.1)+1.1)%1.1*W,y=gy+(c.v>0?(H-gy)*.62:(H-gy)*.25);
+      ctx.fillStyle=night?'#1b2a4d':'#394150';ctx.fillRect(x,y,34,10);ctx.fillRect(x+7,y-6,18,7);ctx.fillStyle=c.c;ctx.fillRect(c.v>0?x+31:x,y+2,3,5);
+      if(night){const lg=ctx.createRadialGradient(x+(c.v>0?36:-2),y+5,1,x+(c.v>0?36:-2),y+5,34);lg.addColorStop(0,'rgba(255,230,160,.5)');lg.addColorStop(1,'rgba(255,230,160,0)');ctx.fillStyle=lg;ctx.fillRect(x-40,y-30,120,60)}})}
+    if(t>1.7)$('#introText').classList.add('show');
+    if(t>5.2&&!done&&FIXT===null)finish();
+    if(!done)raf=requestAnimationFrame(draw);
+  }
+  function finish(){if(done)return;done=true;cancelAnimationFrame(raf);sessionStorage.setItem(LS+'seen','1');el.classList.add('hide');setTimeout(()=>el.remove(),1100);counters()}
+  $('#skip').onclick=finish;raf=requestAnimationFrame(draw);
+}
+
+/* =================== YÖNETİM PANELİ =================== */
+const A=$('#admin');let tab='dash',editing=null,authed=sessionStorage.getItem(LS+'auth')==='1';
+function openAdmin(){A.classList.add('open');document.body.style.overflow='hidden';adm()}
+function closeAdmin(){A.classList.remove('open');document.body.style.overflow='';if(location.hash==='#admin')history.replaceState(null,'',location.pathname);renderGrid()}
+$('#openAdmin').onclick=openAdmin;
+if(location.hash==='#admin')setTimeout(openAdmin,50);
+addEventListener('hashchange',()=>{if(location.hash==='#admin')openAdmin()});
+function adm(){
+  if(!authed){A.innerHTML=`<div class="login"><form id="lf"><div style="font-size:2.4rem">🔐</div><h2 style="margin:0">Yönetim Paneli</h2><small>${esc(S.name)}</small><input type="password" id="lp" placeholder="Şifre" autofocus><button class="btn" style="justify-content:center">Giriş Yap</button><small>Demo şifre: <b>${esc(CFG.adminPass)}</b></small><a style="cursor:pointer;color:#6b7684;font-size:.85rem" id="lback">← Siteye dön</a></form></div>`;
+    $('#lf').onsubmit=e=>{e.preventDefault();if($('#lp').value===CFG.adminPass){authed=true;sessionStorage.setItem(LS+'auth','1');adm()}else{toast('Şifre hatalı')}};
+    $('#lback').onclick=closeAdmin;return}
+  const unread=REQ.filter(r=>!r.read).length;
+  const nav=[['dash','📊 Genel Bakış'],['list','🏘 İlanlar'],['form',editing?'✏️ İlanı Düzenle':'➕ Yeni İlan'],['req','📨 Talepler'+(unread?` (${unread})`:'')],['set','⚙️ Ayarlar']];
+  A.innerHTML=`<div class="adm"><aside class="side"><div class="brand">⌂ ${esc(S.name)}<br><small style="font-weight:400;color:#94a3b8">Yönetim Paneli</small></div>${nav.map(n=>`<button data-t="${n[0]}" class="${tab===n[0]?'on':''}">${n[1]}</button>`).join('')}<div class="sp"></div><button id="toSite">🌐 Siteyi Gör</button><button id="out">🚪 Çıkış</button></aside><div class="main" id="mainA"></div></div>`;
+  $$('.side [data-t]').forEach(b=>b.onclick=()=>{if(b.dataset.t!=='form')editing=null;tab=b.dataset.t;adm()});
+  $('#toSite').onclick=closeAdmin;$('#out').onclick=()=>{authed=false;sessionStorage.removeItem(LS+'auth');adm()};
+  ({dash:tDash,list:tList,form:tForm,req:tReq,set:tSet})[tab]();
+}
+function tDash(){
+  const sat=L.filter(l=>l.type==='satilik').length,kir=L.length-sat;
+  $('#mainA').innerHTML=`<h2>Genel Bakış</h2><div class="kpis"><div class="kpi"><b>${L.length}</b><span>Toplam ilan</span></div><div class="kpi"><b>${sat}</b><span>Satılık</span></div><div class="kpi"><b>${kir}</b><span>Kiralık</span></div><div class="kpi"><b>${REQ.filter(r=>!r.read).length}</b><span>Yeni talep</span></div><div class="kpi"><b>${FAV.length}</b><span>Favorilenen ilan</span></div></div>
+  <div class="panel"><h3>Hızlı İşlemler</h3><div class="row"><button class="btn sm" id="qa">➕ İlan Ekle</button><button class="btn sm ghost" id="qe">⬇ Verileri Dışa Aktar (JSON)</button><button class="btn sm ghost" id="qr">↺ Demo Verisini Sıfırla</button></div></div>
+  <div class="panel"><h3>Son Talepler</h3>${REQ.length?`<table><tr><th>Tarih</th><th>Ad</th><th>Telefon</th><th>Konu</th></tr>${REQ.slice(0,5).map(r=>`<tr><td>${new Date(r.date).toLocaleDateString('tr-TR')}</td><td>${esc(r.ad)}</td><td>${esc(r.tel)}</td><td>${esc(r.konu)}</td></tr>`).join('')}</table>`:'<p style="color:#6b7684">Henüz talep yok. Sitedeki iletişim formunu doldurarak deneyebilirsiniz.</p>'}</div>`;
+  $('#qa').onclick=()=>{tab='form';editing=null;adm()};
+  $('#qe').onclick=()=>{const b=new Blob([JSON.stringify({listings:L,requests:REQ,settings:S},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='veriler.json';a.click()};
+  $('#qr').onclick=()=>{if(confirm('Tüm demo verileri silinip başlangıç haline dönülsün mü?')){['listings','requests','settings','fav'].forEach(k=>localStorage.removeItem(LS+k));L=seed();save('listings',L);REQ=[];FAV=[];S=Object.assign({},CFG.office);bind();adm();toast('Sıfırlandı')}};
+}
+function tList(){
+  $('#mainA').innerHTML=`<div class="row sp-between"><h2>İlanlar (${L.length})</h2><button class="btn sm" id="na">➕ Yeni İlan</button></div><div class="panel"><table><tr><th></th><th>Başlık</th><th>Tür</th><th>Fiyat</th><th>Konum</th><th></th></tr>${L.map(l=>`<tr><td><img src="${imgOf(l)}" alt=""></td><td><b>${esc(l.title)}</b><br><small style="color:#6b7684">${esc(l.rooms)} · ${esc(l.m2)} m² ${l.feat?'· ★':''}</small></td><td><span class="pill ${l.type==='satilik'?'s':'k'}">${l.type==='satilik'?'Satılık':'Kiralık'}</span></td><td>${fmt(l.price)} ₺</td><td>${esc(l.district)}</td><td style="white-space:nowrap"><button class="btn sm ghost" data-e="${esc(l.id)}">Düzenle</button> <button class="btn sm danger" data-d="${esc(l.id)}">Sil</button></td></tr>`).join('')}</table></div>`;
+  $('#na').onclick=()=>{tab='form';editing=null;adm()};
+  $$('[data-e]').forEach(b=>b.onclick=()=>{editing=b.dataset.e;tab='form';adm()});
+  $$('[data-d]').forEach(b=>b.onclick=()=>{if(confirm('Bu ilan silinsin mi?')){L=L.filter(x=>x.id!==b.dataset.d);save('listings',L);adm();toast('İlan silindi')}});
+}
+function tForm(){
+  const l=editing?L.find(x=>x.id===editing):{type:'satilik',cat:'Daire',title:'',price:'',rooms:'2+1',m2:'',floor:'',district:'',desc:'',feat:false,img:'',hue:Math.floor(Math.random()*360)};
+  const o=(arr,v)=>arr.map(x=>`<option ${x===v?'selected':''}>${x}</option>`).join('');
+  $('#mainA').innerHTML=`<h2>${editing?'İlanı Düzenle':'Yeni İlan Ekle'}</h2><form class="panel" id="lf2"><div class="fgrid">
+   <div class="fld" style="grid-column:1/-1"><label>İlan Başlığı</label><input name="title" required value="${esc(l.title)}"></div>
+   <div class="fld"><label>İlan Tipi</label><select name="type"><option value="satilik" ${l.type==='satilik'?'selected':''}>Satılık</option><option value="kiralik" ${l.type==='kiralik'?'selected':''}>Kiralık</option></select></div>
+   <div class="fld"><label>Tür</label><select name="cat">${o(['Daire','Villa','Dükkan','Arsa'],l.cat)}</select></div>
+   <div class="fld"><label>Fiyat (₺)</label><input name="price" type="number" min="0" required value="${esc(l.price)}"></div>
+   <div class="fld"><label>Oda Sayısı</label><select name="rooms">${o(['-','1+0','1+1','2+1','3+1','4+1','5+1'],l.rooms)}</select></div>
+   <div class="fld"><label>m²</label><input name="m2" type="number" min="0" value="${esc(l.m2)}"></div>
+   <div class="fld"><label>Kat</label><input name="floor" value="${esc(l.floor)}" placeholder="3. Kat"></div>
+   <div class="fld"><label>Mahalle / Konum</label><input name="district" value="${esc(l.district)}"></div>
+   <div class="fld" style="grid-column:1/-1"><label>Açıklama</label><textarea name="desc" rows="3">${esc(l.desc)}</textarea></div>
+   <div class="fld"><label>Fotoğraf (isteğe bağlı)</label><input type="file" id="ph" accept="image/*"><small style="color:#6b7684">Boş bırakılırsa otomatik görsel üretilir.</small></div>
+   <div class="fld"><label>Önizleme</label><img id="pv" src="${imgOf(l)}" style="width:150px;border-radius:8px"></div>
+   <div class="fld" style="display:flex;align-items:center;gap:8px"><input type="checkbox" name="feat" id="ft" style="width:auto" ${l.feat?'checked':''}><label for="ft" style="margin:0">★ Fırsat ilanı olarak işaretle</label></div>
+  </div><div class="row" style="margin-top:20px"><button class="btn" type="submit">${editing?'Güncelle':'İlanı Yayınla'}</button><button type="button" class="btn ghost" id="cn">Vazgeç</button></div></form>`;
+  let img=l.img||'';
+  $('#ph').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');const k=Math.min(1,900/im.width);c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);img=c.toDataURL('image/jpeg',.78);$('#pv').src=img};im.src=rd.result};rd.readAsDataURL(f)};
+  $('#cn').onclick=()=>{editing=null;tab='list';adm()};
+  $('#lf2').onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);
+    const n={id:editing||'i'+Date.now(),title:f.get('title'),type:f.get('type'),cat:f.get('cat'),price:+f.get('price'),rooms:f.get('rooms'),m2:+f.get('m2')||0,floor:f.get('floor')||'-',district:f.get('district'),desc:f.get('desc'),feat:!!f.get('feat'),img,hue:l.hue,date:editing?l.date:new Date().toISOString()};
+    const prev=L;L=editing?L.map(x=>x.id===editing?n:x):[n,...L];
+    if(!save('listings',L)){L=prev;return}
+    editing=null;tab='list';adm();toast('İlan kaydedildi ✓')};
+}
+function tReq(){
+  $('#mainA').innerHTML=`<h2>Gelen Talepler (${REQ.length})</h2><div class="panel">${REQ.length?`<table><tr><th>Tarih</th><th>Ad</th><th>Telefon</th><th>Konu</th><th>Mesaj</th><th></th></tr>${REQ.map(r=>`<tr style="${r.read?'opacity:.6':''}"><td>${new Date(r.date).toLocaleString('tr-TR',{dateStyle:'short',timeStyle:'short'})}</td><td><b>${esc(r.ad)}</b></td><td><a href="tel:${esc(r.tel)}">${esc(r.tel)}</a></td><td>${esc(r.konu)}</td><td>${esc(r.mesaj)}</td><td style="white-space:nowrap">${r.read?'':`<button class="btn sm ghost" data-r="${esc(r.id)}">Okundu</button> `}<button class="btn sm danger" data-x="${esc(r.id)}">Sil</button></td></tr>`).join('')}</table>`:'<p style="color:#6b7684">Henüz talep yok.</p>'}</div>`;
+  $$('[data-r]').forEach(b=>b.onclick=()=>{REQ.find(r=>r.id===b.dataset.r).read=true;save('requests',REQ);adm()});
+  $$('[data-x]').forEach(b=>b.onclick=()=>{REQ=REQ.filter(r=>r.id!==b.dataset.x);save('requests',REQ);adm()});
+}
+function tSet(){
+  const f=(k,l)=>`<div class="fld"><label>${l}</label><input name="${k}" value="${esc(S[k])}"></div>`;
+  $('#mainA').innerHTML=`<h2>Ofis Ayarları</h2><form class="panel" id="sf"><div class="fgrid">${f('name','Ofis Adı')}${f('slogan','Slogan')}${f('phone','Telefon')}${f('whatsapp','WhatsApp (905xx...)')}${f('address','Adres')}${f('hours','Çalışma Saatleri')}${f('email','E-posta')}</div><div class="row" style="margin-top:20px"><button class="btn">Kaydet</button></div></form>`;
+  $('#sf').onsubmit=e=>{e.preventDefault();const d=new FormData(e.target);for(const [k,v] of d.entries())S[k]=v;save('settings',S);bind();adm();toast('Ayarlar kaydedildi ✓')};
+}
+
+/* ---------- başlat ---------- */
+bind();renderGrid();observe();intro();
+</script>
+</body>
+</html>
